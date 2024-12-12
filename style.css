@@ -1,0 +1,51 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Nunito Sans", sans-serif;
+}
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+#header {
+  width: 100%;
+  position: absolute;
+}
+/* CAROUSEL  */
+.carousel {
+  height: 800px;
+  background-image: url("./img/background.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.carousel_content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.content {
+  font-size: 1.5rem;
+  align-items: center;
+}
+.content h1 {
+  color: blue;
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+/* Products */
+.prod_content h1 {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+}
+.gioHang {
+  display: flex;
+  justify-content: left;
+}
+#products {
+  margin-top: 20px;
+}

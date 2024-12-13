@@ -2,7 +2,24 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      maxWidth: {
+        "w-540": "540px",
+        "w-1280": "1280px",
+        "w-1390": "1390px",
+      },
+      backgroundColor: {
+        "bg-footer": "#BCCCDC",
+        "bg-modal": "#A2D2DF",
+        "bg-form": "#EEEEEE",
+      },
+      fontSize: {
+        "fs-30": "30px",
+      },
+      width: {
+        "w-540": "540px",
+      },
+    },
   },
-  plugins: [],
-}
+  plugins: [require("flowbite/plugin")],
+};

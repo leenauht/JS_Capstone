@@ -17,8 +17,16 @@ const renderListProduct = (data) => {
         </td>
         <td class="px-6 py-4">${product.desc}</td>
         <td class="px-6 py-4">
-            <button class="btn btn-primary">Edit</button>
-            <button class="btn btn-danger">Delete</button>
+          <button
+            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          >
+            Edit
+          </button>
+          <button
+            class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          >
+            Delete
+          </button>
         </td>
       </tr>
     `;

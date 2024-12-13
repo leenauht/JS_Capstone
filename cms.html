@@ -11,12 +11,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <!-- <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    /> -->
     <!-- FLOWBITE  -->
     <link
       href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
@@ -26,8 +20,10 @@
     <link rel="stylesheet" href="./src/output.css" />
   </head>
   <body>
-    <nav class="bg-gradient-to-t from-[#F8F9FF] to-[#DEE7FF]">
-      <div class="mx-auto max-w-w-1390 py-5">
+    <nav
+      class="bg-gradient-to-t from-[#F8F9FF] to-[#DEE7FF] shadow-blue-3 fixed w-full top-0 z-50"
+    >
+      <div class="mx-auto py-5 max-w-w-1280">
         <div class="flex items-center justify-between">
           <div class="flex gap-20">
             <a
@@ -70,7 +66,7 @@
               </div>
               <div>
                 <a
-                  href="../app/views/index.html"
+                  href="./index.html"
                   class="flex flex-col items-center font-medium text-gray-700 hover:text-blue-600"
                 >
                   <svg
@@ -113,21 +109,24 @@
       </div>
     </nav>
     <!-- ------------------------Phone Management------------------------ -->
-    <section>
-      <div class="container mx-auto my-16">
+    <section class="mt-40">
+      <div class="container mx-auto mb-16">
         <div class="my-5">
           <h1 class="text-center text-4xl font-medium">Phone Management</h1>
         </div>
 
         <div class="flex justify-end">
+          <!-- Modal toggle -->
           <button
+            data-modal-target="crud-modal"
+            data-modal-toggle="crud-modal"
+            class="flex items-center gap-2 px-4 py-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center me-2 mb-2"
             type="button"
-            class="flex items-center gap-2 px-4 py-2 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm text-center me-2 mb-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
+              width="24"
+              height="24"
               viewBox="0 0 1024 1024"
             >
               <path
@@ -155,193 +154,10 @@
                 <th scope="col" class="px-6 py-3">Action</th>
               </tr>
             </thead>
-            <tbody id="tbListProduct">
-              <!-- <tr class="bg-white border-b">
-                <th
-                  scope="row"
-                  class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                >
-                  1
-                </th>
-                <td class="px-6 py-4">Silver</td>
-                <td class="px-6 py-4">Laptop</td>
-                <td class="px-6 py-4">$2999</td>
-                <td class="px-6 py-4">Đẹp</td>
-              </tr> -->
-            </tbody>
+            <tbody id="tbListProduct"></tbody>
           </table>
         </div>
       </div>
-
-      <div class="pop_up mx-auto max-w-w-540 bg-bg-modal px-4 py-4 rounded-xl">
-        <div class="modal-content">
-          <header class="head-form mb-0">
-            <h3
-              id="header-title"
-              class="text-center mb-4 text-fs-30 font-medium"
-            >
-              Phone Management
-            </h3>
-          </header>
-
-          <div class="modal-body">
-            <form
-              role="form"
-              id="formPhone"
-              class="bg-bg-form px-2 py-4 rounded-lg"
-            >
-              <div class="form-group">
-                <div class="flex items-center gap-2">
-                  <div class="w-10 text-center">
-                    <i class="fa-solid fa-phone text-fs-30"></i>
-                  </div>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    class="form-control input-sm rounded-lg"
-                    placeholder="Phone name"
-                  />
-                </div>
-                <span class="sp-thongbao" id="tbname">&zwj;</span>
-              </div>
-
-              <div class="form-group">
-                <div class="flex items-center gap-2">
-                  <div class="w-10 text-center">
-                    <i class="fa-solid fa-dollar-sign text-fs-30"></i>
-                  </div>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    class="form-control input-sm rounded-lg"
-                    placeholder="Price"
-                  />
-                </div>
-                <span class="sp-thongbao" id="tbname">&zwj;</span>
-              </div>
-
-              <div class="form-group">
-                <div class="flex items-center gap-2">
-                  <div class="w-10 text-center">
-                    <i class="fa-solid fa-mobile-screen text-fs-30"></i>
-                  </div>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    class="form-control input-sm rounded-lg"
-                    placeholder="Price"
-                  />
-                </div>
-                <span class="sp-thongbao" id="tbname">&zwj;</span>
-              </div>
-
-              <div class="form-group">
-                <div class="flex items-center gap-2">
-                  <div class="w-10 text-center">
-                    <i class="fa-solid fa-camera text-fs-30"></i>
-                  </div>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    class="form-control input-sm rounded-lg"
-                    placeholder="Price"
-                  />
-                </div>
-                <span class="sp-thongbao" id="tbname">&zwj;</span>
-              </div>
-
-              <div class="form-group">
-                <div class="flex items-center gap-2">
-                  <div class="w-10 text-center">
-                    <i class="fa-solid fa-camera text-fs-30"></i>
-                  </div>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    class="form-control input-sm rounded-lg"
-                    placeholder="Price"
-                  />
-                </div>
-                <span class="sp-thongbao" id="tbname">&zwj;</span>
-              </div>
-
-              <div class="form-group">
-                <div class="flex items-center gap-2">
-                  <div class="w-10 text-center">
-                    <i class="fa-solid fa-link text-fs-30"></i>
-                  </div>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    class="form-control input-sm rounded-lg"
-                    placeholder="Price"
-                  />
-                </div>
-                <span class="sp-thongbao" id="tbname">&zwj;</span>
-              </div>
-
-              <div class="form-group">
-                <div class="flex items-center gap-2">
-                  <div class="w-10 text-center">
-                    <i class="fa-solid fa-comment text-fs-30"></i>
-                  </div>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    class="form-control input-sm rounded-lg"
-                    placeholder="Price"
-                  />
-                </div>
-                <span class="sp-thongbao" id="tbname">&zwj;</span>
-              </div>
-
-              <div class="form-group">
-                <div class="flex items-center gap-2">
-                  <div class="w-10 text-center">
-                    <i class="fa-solid fa-signature text-fs-30"></i>
-                  </div>
-                  <select class="form-control" name="chucvu" id="type">
-                    <option selected="" disabled="">Select brand</option>
-                    <option>Apple</option>
-                    <option>Samsung</option>
-                  </select>
-                </div>
-                <span class="sp-thongbao" id="tbname">&zwj;</span>
-              </div>
-            </form>
-          </div>
-
-          <!-- Modal footer -->
-          <div class="modal-footer flex gap-2 mt-3" id="modal-footer">
-            <button type="button" class="btn btn-primary" id="btnAddPhone">
-              Add Phone
-            </button>
-            <button id="btnUpdate" type="button" class="btn btn-warning">
-              Update Phone
-            </button>
-            <button id="btnClose" type="button" class="btn btn-danger">
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal toggle -->
-      <button
-        data-modal-target="crud-modal"
-        data-modal-toggle="crud-modal"
-        class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        type="button"
-      >
-        Toggle modal
-      </button>
 
       <!-- Main modal -->
       <div
@@ -358,7 +174,7 @@
               class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
             >
               <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                Create New Product
+                Phone Management
               </h3>
               <button
                 type="button"
@@ -385,23 +201,25 @@
             </div>
             <!-- Modal body -->
             <form class="p-4 md:p-5">
-              <div class="grid gap-4 mb-4 grid-cols-2">
+              <div class="grid gap-2 mb-4 grid-cols-2">
                 <div class="col-span-2">
                   <label
                     for="name"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >Name</label
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Phone Name</label
                   >
                   <input
                     type="text"
-                    name="name"
                     id="name"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Type product name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    placeholder="Phone name"
                     required=""
                   />
+                  <span class="sp-thongbao" id="tbname">&zwj;</span>
                 </div>
-                <div class="col-span-2 sm:col-span-1">
+
+                <div class="col-span-1">
                   <label
                     for="price"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -412,59 +230,134 @@
                     name="price"
                     id="price"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="$2999"
+                    placeholder="$0"
                     required=""
                   />
+                  <span class="sp-thongbao" id="tbprice">&zwj;</span>
                 </div>
-                <div class="col-span-2 sm:col-span-1">
+
+                <div class="col-span-1">
                   <label
-                    for="category"
+                    for="name"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >Category</label
                   >
-                  <select
-                    id="category"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    Screen</label
                   >
-                    <option selected="">Select category</option>
-                    <option value="TV">TV/Monitors</option>
-                    <option value="PC">PC</option>
-                    <option value="GA">Gaming/Console</option>
-                    <option value="PH">Phones</option>
-                  </select>
+                  <input
+                    type="text"
+                    id="screen"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Screen"
+                    required=""
+                  />
+                  <span class="sp-thongbao" id="tbscreen">&zwj;</span>
                 </div>
+
+                <div class="col-span-2">
+                  <label
+                    for="name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Back Camera</label
+                  >
+                  <input
+                    type="text"
+                    id="backCam"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Back Camera"
+                    required=""
+                  />
+                  <span class="sp-thongbao" id="tbbackCam">&zwj;</span>
+                </div>
+
+                <div class="col-span-1">
+                  <label
+                    for="name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Front Camera</label
+                  >
+                  <input
+                    type="text"
+                    id="frontCam"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Front Camera"
+                    required=""
+                  />
+                  <span class="sp-thongbao" id="tbfrontCam">&zwj;</span>
+                </div>
+
+                <div class="col-span-1">
+                  <label
+                    for="name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Image link</label
+                  >
+                  <input
+                    type="text"
+                    id="img"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Url link"
+                    required=""
+                  />
+                  <span class="sp-thongbao" id="tbimg">&zwj;</span>
+                </div>
+
                 <div class="col-span-2">
                   <label
                     for="description"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >Product Description</label
+                    >Description</label
                   >
                   <textarea
-                    id="description"
+                    id="desc"
                     rows="4"
                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write product description here"
+                    placeholder="Write phone description here"
                   ></textarea>
+                  <span class="sp-thongbao" id="tbdesc">&zwj;</span>
+                </div>
+
+                <div class="col-span-2">
+                  <label
+                    for="category"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Select brand</label
+                  >
+                  <select
+                    id="type"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  >
+                    <option selected="" disabled="">Select brand</option>
+                    <option>Apple</option>
+                    <option>Samsung</option>
+                    <option>Xiaomi</option>
+                  </select>
+                  <span class="sp-thongbao" id="tbtype">&zwj;</span>
                 </div>
               </div>
-              <button
-                type="submit"
-                class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                <svg
-                  class="me-1 -ms-1 w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+              <div class="flex justify-end gap-2">
+                <button
+                  type="submit"
+                  class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                Add new product
-              </button>
+                  Add Phone
+                </button>
+                <button
+                  type="submit"
+                  class="text-white inline-flex items-center bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                >
+                  Update Phone
+                </button>
+                <button
+                  type="submit"
+                  class="text-white inline-flex items-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  data-modal-toggle="crud-modal"
+                >
+                  Close
+                </button>
+              </div>
             </form>
           </div>
         </div>

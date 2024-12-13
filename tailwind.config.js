@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./src/**/*.{html,js}", "*.{html,js}"],
   theme: {
     extend: {
       maxWidth: {
@@ -19,7 +19,10 @@ module.exports = {
       width: {
         "w-540": "540px",
       },
+      boxShadow: {
+        "blue-3": "0 2px 4px #c9d8f4",
+      },
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [],
 };

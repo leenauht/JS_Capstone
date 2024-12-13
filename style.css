@@ -12,12 +12,16 @@ body {
 }
 #header {
   width: 100%;
-  position: absolute;
+  position: fixed;
+  z-index: 10;
+  background-color: rgba(82, 82, 82, 0.444);
+  /* border-bottom: 1px solid black; */
 }
 /* CAROUSEL  */
 .carousel {
   height: 800px;
   background-image: url("./img/background.jpg");
+  backdrop-filter: blur(10px);
   background-size: cover;
   background-position: center;
 }

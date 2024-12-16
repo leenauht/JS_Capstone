@@ -1,4 +1,4 @@
-class Filter {
+class ProductList {
   constructor() {
     this.arr = [];
   }
@@ -17,4 +17,4 @@ class Filter {
     }
   }
 }
-export default new Filter
+export default new ProductList();

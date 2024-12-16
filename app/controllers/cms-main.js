@@ -1,4 +1,5 @@
 import api from "../services/cms-api.js";
+import filter from "./../services/product_filter.js";
 
 const getElmId = (id) => document.getElementById(id);
 

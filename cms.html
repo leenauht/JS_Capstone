@@ -18,17 +18,25 @@
     />
     <!-- TAILWIND  -->
     <link rel="stylesheet" href="./src/output.css" />
+
+    <!-- Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
   </head>
-  <body>
+  <body class="body">
     <nav
       class="bg-gradient-to-t from-[#F8F9FF] to-[#DEE7FF] shadow-blue-3 fixed w-full top-0 z-50"
     >
-      <div class="mx-auto py-5 max-w-w-1280">
+      <div class="mx-auto py-6 max-w-w-1280">
         <div class="flex items-center justify-between">
           <div class="flex gap-20">
             <a
               href="#"
-              class="flex items-center gap-4 font-medium text-blue-600"
+              class="no-underline flex items-center gap-4 font-medium text-blue-600"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +56,7 @@
               <div>
                 <a
                   href="#"
-                  class="flex flex-col items-center font-medium text-gray-700 hover:text-blue-600"
+                  class="no-underline flex flex-col items-center font-medium text-gray-700 hover:text-blue-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +75,7 @@
               <div>
                 <a
                   href="./index.html"
-                  class="flex flex-col items-center font-medium text-gray-700 hover:text-blue-600"
+                  class="no-underline flex flex-col items-center font-medium text-gray-700 hover:text-blue-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +97,7 @@
           <div class="">
             <a
               href="#"
-              class="flex flex-col items-center font-medium text-gray-700 hover:text-blue-600"
+              class="no-underline flex flex-col items-center font-medium text-gray-700 hover:text-blue-600"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -108,6 +116,7 @@
         </div>
       </div>
     </nav>
+
     <!-- ------------------------Phone Management------------------------ -->
     <section class="mt-40">
       <div class="container mx-auto mb-16">
@@ -115,11 +124,53 @@
           <h1 class="text-center text-4xl font-medium">Phone Management</h1>
         </div>
 
-        <div class="flex justify-end">
+        <!-- Search & add phone -->
+        <div class="flex justify-between">
+          <div class="flex items-center gap-4 w-1/2">
+            <form class="flex py-2 w-1/2">
+              <label for="voice-search" class="sr-only">Search</label>
+              <div class="relative w-full">
+                <input
+                  type="text"
+                  id="voice-search"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
+                  placeholder="Search"
+                  required
+                />
+                <button
+                  type="button"
+                  class="absolute inset-y-0 end-0 flex items-center mr-1.5"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 1024 1024"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1c-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0 0 11.6 0l43.6-43.5a8.2 8.2 0 0 0 0-11.6M570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </form>
+
+            <select
+              id="arrange"
+              class="w-1/3 p-1.5 font-medium h-9 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block"
+            >
+              <option selected="">Default sorting</option>
+              <option>Ascending order</option>
+              <option>Descending order</option>
+            </select>
+          </div>
+
           <!-- Modal toggle -->
           <button
-            data-modal-target="crud-modal"
-            data-modal-toggle="crud-modal"
+            id="btnAddPhone"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
             class="flex items-center gap-2 px-4 py-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center me-2 mb-2"
             type="button"
           >
@@ -156,57 +207,40 @@
             </thead>
             <tbody id="tbListProduct"></tbody>
           </table>
+          <span
+            class="sp-thongbao text-center py-4 !text-xl"
+            id="tbSearch"
+          ></span>
         </div>
       </div>
 
-      <!-- Main modal -->
+      <!-- Modal -->
       <div
-        id="crud-modal"
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
         tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
       >
-        <div class="relative p-4 w-full max-w-md max-h-full">
-          <!-- Modal content -->
-          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <!-- Modal header -->
-            <div
-              class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
-            >
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
                 Phone Management
-              </h3>
+              </h5>
               <button
                 type="button"
-                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-toggle="crud-modal"
-              >
-                <svg
-                  class="w-3 h-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 14"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                  />
-                </svg>
-                <span class="sr-only">Close modal</span>
-              </button>
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
-            <!-- Modal body -->
-            <form class="p-4 md:p-5">
+            <form id="product_form" class="p-4">
               <div class="grid gap-2 mb-4 grid-cols-2">
                 <div class="col-span-2">
-                  <label
-                    for="name"
-                    class="block mb-2 text-sm font-medium text-gray-900"
-                  >
+                  <label class="block mb-2 text-sm font-medium text-gray-900">
                     Phone Name</label
                   >
                   <input
@@ -214,31 +248,26 @@
                     id="name"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                     placeholder="Phone name"
-                    required=""
                   />
                   <span class="sp-thongbao" id="tbname">&zwj;</span>
                 </div>
 
                 <div class="col-span-1">
                   <label
-                    for="price"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Price</label
                   >
                   <input
-                    type="number"
-                    name="price"
+                    type="text"
                     id="price"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="$0"
-                    required=""
                   />
                   <span class="sp-thongbao" id="tbprice">&zwj;</span>
                 </div>
 
                 <div class="col-span-1">
                   <label
-                    for="name"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Screen</label
@@ -248,14 +277,12 @@
                     id="screen"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Screen"
-                    required=""
                   />
                   <span class="sp-thongbao" id="tbscreen">&zwj;</span>
                 </div>
 
                 <div class="col-span-2">
                   <label
-                    for="name"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Back Camera</label
@@ -265,14 +292,12 @@
                     id="backCam"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Back Camera"
-                    required=""
                   />
                   <span class="sp-thongbao" id="tbbackCam">&zwj;</span>
                 </div>
 
                 <div class="col-span-1">
                   <label
-                    for="name"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Front Camera</label
@@ -282,14 +307,12 @@
                     id="frontCam"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Front Camera"
-                    required=""
                   />
                   <span class="sp-thongbao" id="tbfrontCam">&zwj;</span>
                 </div>
 
                 <div class="col-span-1">
                   <label
-                    for="name"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Image link</label
@@ -299,14 +322,12 @@
                     id="img"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Url link"
-                    required=""
                   />
                   <span class="sp-thongbao" id="tbimg">&zwj;</span>
                 </div>
 
                 <div class="col-span-2">
                   <label
-                    for="description"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Description</label
                   >
@@ -321,7 +342,6 @@
 
                 <div class="col-span-2">
                   <label
-                    for="category"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >Select brand</label
                   >
@@ -330,35 +350,15 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
                     <option selected="" disabled="">Select brand</option>
-                    <option>Apple</option>
+                    <option>Iphone</option>
                     <option>Samsung</option>
                     <option>Xiaomi</option>
                   </select>
                   <span class="sp-thongbao" id="tbtype">&zwj;</span>
                 </div>
               </div>
-              <div class="flex justify-end gap-2">
-                <button
-                  type="submit"
-                  class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                >
-                  Add Phone
-                </button>
-                <button
-                  type="submit"
-                  class="text-white inline-flex items-center bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                >
-                  Update Phone
-                </button>
-                <button
-                  type="submit"
-                  class="text-white inline-flex items-center bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                  data-modal-toggle="crud-modal"
-                >
-                  Close
-                </button>
-              </div>
             </form>
+            <div class="modal-footer"></div>
           </div>
         </div>
       </div>
@@ -394,36 +394,36 @@
             </div>
 
             <div
-              class="wow animate__animated animate_down flex w-full flex-col gap-8 md:flex-row md:justify-between md:gap-0 lg:w2/3 xl:w-7/12"
+              class="flex w-full flex-col gap-8 md:flex-row md:justify-between md:gap-0 lg:w2/3 xl:w-7/12"
             >
               <div>
                 <h3 class="mb-9 text-26 font-medium text-black">Brands</h3>
-                <ul class="text-color-text text-18">
+                <ul class="text-color-text text-18 p-0">
                   <li>
                     <a
                       href="#"
-                      class="inline-block mb-3 duration-300 hover:text-color-hover"
+                      class="no-underline inline-block mb-3 duration-300 hover:text-color-hover"
                       >iPhone</a
                     >
                   </li>
                   <li>
                     <a
                       href="#"
-                      class="inline-block mb-3 duration-300 hover:text-color-hover"
+                      class="no-underline inline-block mb-3 duration-300 hover:text-color-hover"
                       >Sumsung
                     </a>
                   </li>
                   <li>
                     <a
                       href="#"
-                      class="inline-block mb-3 duration-300 hover:text-color-hover"
+                      class="no-underline inline-block mb-3 duration-300 hover:text-color-hover"
                       >Xiaomi</a
                     >
                   </li>
                   <li>
                     <a
                       href="#"
-                      class="inline-block mb-3 duration-300 hover:text-color-hover"
+                      class="no-underline inline-block mb-3 duration-300 hover:text-color-hover"
                       >Oppo</a
                     >
                   </li>
@@ -434,32 +434,32 @@
                 <h3 class="mb-9 text-26 font-medium text-black">
                   Useful links
                 </h3>
-                <ul class="text-color-text text-18">
+                <ul class="text-color-text text-18 p-0">
                   <li>
                     <a
                       href="#"
-                      class="inline-block mb-3 duration-300 hover:text-color-hover"
+                      class="no-underline inline-block mb-3 duration-300 hover:text-color-hover"
                       >Pricing</a
                     >
                   </li>
                   <li>
                     <a
                       href="#"
-                      class="inline-block mb-3 duration-300 hover:text-color-hover"
+                      class="no-underline inline-block mb-3 duration-300 hover:text-color-hover"
                       >Settings</a
                     >
                   </li>
                   <li>
                     <a
                       href="#"
-                      class="inline-block mb-3 duration-300 hover:text-color-hover"
+                      class="no-underline inline-block mb-3 duration-300 hover:text-color-hover"
                       >Orders</a
                     >
                   </li>
                   <li>
                     <a
                       href="#"
-                      class="inline-block mb-3 duration-300 hover:text-color-hover"
+                      class="no-underline inline-block mb-3 duration-300 hover:text-color-hover"
                       >Help</a
                     >
                   </li>
@@ -468,27 +468,27 @@
 
               <div>
                 <h3 class="mb-9 text-26 font-medium text-black">Contact</h3>
-                <ul class="text-color-text text-18">
+                <ul class="text-color-text text-18 p-0">
                   <li>
-                    <div class="flex items-center gap-5 mb-3">
+                    <div class="flex items-center gap-4 mb-3">
                       <i class="fa-solid fa-house"></i>
                       <span>Tân Bình, Tp.HCM</span>
                     </div>
                   </li>
                   <li>
-                    <div class="flex items-center gap-5 mb-3">
+                    <div class="flex items-center gap-4 mb-3">
                       <i class="fa-solid fa-envelope"></i>
                       <span>abcd@gmail.com</span>
                     </div>
                   </li>
                   <li>
-                    <div class="flex items-center gap-5 mb-3">
+                    <div class="flex items-center gap-4 mb-3">
                       <i class="fa-solid fa-phone"></i>
                       <span>+ 84 123 246 789</span>
                     </div>
                   </li>
                   <li>
-                    <div class="flex items-center gap-5 mb-3">
+                    <div class="flex items-center gap-4 mb-3">
                       <i class="fa-solid fa-print"></i>
                       <span>+ 01 234 567 89</span>
                     </div>
@@ -505,13 +505,13 @@
         <div>
           <ul class="text-color-text text-18 flex gap-8 items-center">
             <li class="duration-300 hover:text-color-hover">
-              <a href="#">English</a>
+              <a href="#" class="no-underline">English</a>
             </li>
             <li class="duration-300 hover:text-color-hover">
-              <a href="#">Privacy Policy</a>
+              <a href="#" class="no-underline">Privacy Policy</a>
             </li>
             <li class="duration-300 hover:text-color-hover">
-              <a href="#">Support</a>
+              <a href="#" class="no-underline">Support</a>
             </li>
           </ul>
         </div>
@@ -596,6 +596,12 @@
       integrity="sha512-v8+bPcpk4Sj7CKB11+gK/FnsbgQ15jTwZamnBf/xDmiQDcgOIYufBo6Acu1y30vrk8gg5su4x0CG3zfPaq5Fcg=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
     ></script>
 
     <script type="module" src="./app/controllers/cms-main.js"></script>

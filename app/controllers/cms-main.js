@@ -1,6 +1,7 @@
 import api from "../services/cms-api.js";
 import Products from "../models/cms-product.js";
 import Validation from "../models/cms-validation.js";
+import filter from "./../services/product_filter.js";
 
 export const getElmId = (id) => document.getElementById(id);
 

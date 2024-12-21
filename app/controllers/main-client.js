@@ -17,7 +17,7 @@ const renderList = (data) => {
     content += `
 <div>
   <img class="h-auto max-w-full rounded-lg"
-    src="./../../img/${img}" alt="">
+    src="./../../img/${img}" alt="logo">
   <div class="noiDungSp mt-4">
     <h4 id="tenSP" class="text-2xl">${name}</h4>
     <h7 class="moTaSP" class="text-xs">${desc}</h7>

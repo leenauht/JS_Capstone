@@ -37,35 +37,25 @@ const getInfoInput = () => {
     );
 
   // Phone screen
-  isValid &=
-    validation.checkEmpty(screen, "tbscreen", "Please input phone screen!") &&
-    validation.checkSpecialCharacter(
-      screen,
-      "tbscreen",
-      "Must not contain special characters!"
-    );
+  isValid &= validation.checkEmpty(
+    screen,
+    "tbscreen",
+    "Please input phone screen!"
+  );
 
   // Back camera
-  isValid &=
-    validation.checkEmpty(backCam, "tbbackCam", "Please input back camera!") &&
-    validation.checkSpecialCharacter(
-      backCam,
-      "tbbackCam",
-      "Must not contain special characters!"
-    );
+  isValid &= validation.checkEmpty(
+    backCam,
+    "tbbackCam",
+    "Please input back camera!"
+  );
 
   // Front camera
-  isValid &=
-    validation.checkEmpty(
-      frontCam,
-      "tbfrontCam",
-      "Please input front camera!"
-    ) &&
-    validation.checkSpecialCharacter(
-      frontCam,
-      "tbfrontCam",
-      "Must not contain special characters!"
-    );
+  isValid &= validation.checkEmpty(
+    frontCam,
+    "tbfrontCam",
+    "Please input front camera!"
+  );
 
   // Image url
   isValid &=

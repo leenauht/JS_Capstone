@@ -1,4 +1,5 @@
 import productList from "../services/product_lists.js";
+import api from "../services/cms-api.js";
 
 const getEleId = (id) => document.getElementById(id);
 
@@ -12,34 +13,32 @@ let productInCart = localStorage.getItem("products")
  */
 const renderList = (data) => {
   let content = "";
+
   data.forEach((product) => {
-    const { img, name, price, desc } = product;
+    const { img, name, price, desc, id } = product;
     content += `
-<div>
-  <img class="h-auto max-w-full rounded-lg"
-    src="./../../img/${img}" alt="logo">
-  <div class="noiDungSp mt-4">
-    <h4 id="tenSP" class="text-2xl">${name}</h4>
-    <h7 class="moTaSP" class="text-xs">${desc}</h7>
-    <h2 id="giaSP" class="text-xl text-red-500">${price}</h2>
-    <button id="muaSP" type="button"
-      class="ease-out duration-300 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Thêm
-      vào giỏ hàng</button>
-  </div>
-</div>
+      <div class="w-full shadow-blue-3 py-10 px-5 bg-bg-modal rounded-xl">
+          <img class="max-w-60 rounded-lg"
+            src="${img}" alt="logo">
+          <div class="noiDungSp mt-4">
+            <h4 class="tenSP" class="text-2xl mb-2 font-medium">${name}</h4>
+            <p class="moTaSP">${desc}</p>
+            <h2 class="giaSP text-xl text-red-500 my-2 font-medium">${price}</h2>
+            <button onclick="handleAdd(${id})" type="button"
+              class="ease-out duration-300 text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Thêm
+              vào giỏ hàng</button>
+          </div>
+      </div>
     `;
   });
-  getEleId("mainProduct").innerHTML = content;
+  getEleId("container_product").innerHTML = content;
 };
 
 // show loader
 getEleId("loader").style.display = "block";
 
-const fetchList = () => {
-  const promise = axios({
-    url: "https://6756aa03c0a427baf949beca.mockapi.io/api/Products",
-    method: "GET",
-  });
+const getListProduct = () => {
+  const promise = api.fetchData();
   promise
     .then((result) => {
       renderList(result.data);
@@ -50,7 +49,7 @@ const fetchList = () => {
       getEleId("loader").style.display = "none";
     });
 };
-fetchList();
+getListProduct();
 
 // Add Products To Cart
 document.addEventListener("DOMContentLoaded", function () {
@@ -216,3 +215,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // Render giỏ hàng khi trang tải lại
   renderCart();
 });
+
+// Thêm sản phẩm và đếm số lượng sản phẩm
+let count = 0;
+const handleAdd = (id) => {
+  count++;
+  getEleId("gioHang").innerHTML = `
+          Xem giỏ hàng (${count})
+        `;
+  const promise = api.fetchData();
+  promise
+    .then((result) => {})
+    .catch((error) => {
+      console.log(error);
+    });
+};
+window.handleAdd = handleAdd;

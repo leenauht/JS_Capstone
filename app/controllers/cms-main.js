@@ -123,6 +123,7 @@ const getListProduct = () => {
   const promise = api.fetchData();
   promise
     .then((result) => {
+      console.log(result.data.id);
       renderListProduct(result.data);
     })
     .catch((error) => {

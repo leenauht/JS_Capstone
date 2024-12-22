@@ -1,0 +1,25 @@
+.bg_img{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../../img/store.png");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 360px;
+    
+    a{
+        font-size: 30px;
+        color: blue;
+    }
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

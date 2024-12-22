@@ -79,3 +79,13 @@ body {
   bottom: 40px;
   right: 40px;
 }
+
+.moTaSP {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5; /* Khoảng cách giữa các dòng */
+  min-height: calc(2 * 1.5em); /* Chiều cao tối thiểu là 2 dòng */
+}

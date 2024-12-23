@@ -138,6 +138,7 @@ const handleAdd = (id) => {
     }
   }
   renderNumberCart();
+  alert("Thêm vào giỏ hàng thành công!");
   setLocalStorage();
 };
 window.handleAdd = handleAdd;
@@ -180,3 +181,8 @@ getEleId("fillter").addEventListener("change", () => {
       console.log(error);
     });
 });
+const handleDecreace = () => {};
+window.handleDecreace = handleDecreace;
+
+const handleIncreace = () => {};
+window.handleIncreace = handleIncreace;

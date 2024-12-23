@@ -8,7 +8,7 @@ class ProductList {
   }
 
   filterProducts(type) {
-    if (type === "all") {
+    if (type === "Tất cả") {
       return this.arr;
     } else {
       const result = [];

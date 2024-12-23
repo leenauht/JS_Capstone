@@ -2,11 +2,8 @@ import productList from "../services/product_lists.js";
 import api from "../services/cms-api.js";
 
 const getEleId = (id) => document.getElementById(id);
-
-// State for cart items
-let productInCart = localStorage.getItem("products")
-  ? JSON.parse(localStorage.getItem("products"))
-  : []; // Giỏ hàng lấy từ localStorage hoặc là mảng rỗng
+// let listProduct = [];
+let cartList = [];
 
 /**
  * Render SP
@@ -43,6 +40,8 @@ const getListProduct = () => {
     .then((result) => {
       renderList(result.data);
       getEleId("loader").style.display = "none";
+      // listProduct = result.data;
+      productList.addProduct(result.data);
     })
     .catch((error) => {
       console.log(error);
@@ -51,183 +50,127 @@ const getListProduct = () => {
 };
 getListProduct();
 
-// Add Products To Cart
-document.addEventListener("DOMContentLoaded", function () {
-  const addToCartButtons = document.querySelectorAll("#muaSP");
-  const cartTableBody = document.querySelector("#tbodyProduct");
-  const btnThanhToan = document.querySelector("#btnThanhToan");
+// Set localStorage
+const setLocalStorage = () => {
+  const dataJson = cartList;
+  // Convert dataJson to string
+  const dataString = JSON.stringify(dataJson);
+  // Save dataString to localStorage
+  localStorage.setItem("CART_LIST", dataString);
+};
 
-  // Load giỏ hàng từ localStorage nếu có
-  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || []; // Nếu không có giỏ hàng, khởi tạo mảng rỗng
-
-  // Xử lý sự kiện khi nhấn "Thêm vào giỏ hàng"
-  addToCartButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const productContainer = this.closest("div.noiDungSp");
-      const productName = productContainer
-        .querySelector("#tenSP")
-        .textContent.trim();
-      const productPrice = productContainer
-        .querySelector("#giaSP")
-        .textContent.trim();
-      const productImage =
-        productContainer.previousElementSibling.getAttribute("src");
-
-      const priceNumber = parseFloat(productPrice.replace(/[^0-9.-]+/g, ""));
-
-      const existingProduct = cartItems.find(
-        (item) => item.name === productName
-      );
-
-      if (existingProduct) {
-        existingProduct.quantity += 1;
-      } else {
-        cartItems.push({
-          name: productName,
-          price: priceNumber,
-          priceFormatted: productPrice,
-          image: productImage,
-          quantity: 1,
-        });
-      }
-
-      // Lưu giỏ hàng vào localStorage
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-      renderCart(); // Cập nhật lại giỏ hàng
-    });
-  });
-
-  // Hàm render giỏ hàng
-  function renderCart() {
-    cartTableBody.innerHTML = ""; // Xóa nội dung giỏ hàng cũ
-
-    if (cartItems.length === 0) {
-      cartTableBody.innerHTML =
-        "<tr><td colspan='7' class='text-center'>Giỏ hàng của bạn hiện tại trống.</td></tr>";
-      return;
-    }
-
-    let totalAmount = 0;
-
-    cartItems.forEach((item, index) => {
-      const totalPrice = item.price * item.quantity;
-      const formattedPrice = formatPrice(item.price);
-      const formattedTotalPrice = formatPrice(totalPrice);
-      totalAmount += totalPrice;
-
-      const row = `
-        <tr>
-          <td class="border p-2">${index + 1}</td>
-          <td class="border p-2">${item.name}</td>
-          <td class="border p-2"><img src="${item.image}" alt="${
-        item.name
-      }" class="w-16 h-16 rounded"></td>
-          <td class="border p-2">
-            <div class="flex items-center justify-center">
-              <button onclick="decreaseQuantity('${
-                item.name
-              }')" class="px-2 py-1 text-white bg-red-500 rounded-lg">-</button>
-              <span class="mx-2">${item.quantity}</span>
-              <button onclick="increaseQuantity('${
-                item.name
-              }')" class="px-2 py-1 text-white bg-green-500 rounded-lg">+</button>
-            </div>
-          </td>
-          <td class="border p-2">${formattedPrice}</td> <!-- Cập nhật hiển thị giá tiền không dấu phẩy -->
-          <td class="border p-2">${formattedTotalPrice}</td> <!-- Cập nhật hiển thị thành tiền không dấu phẩy -->
-          <td class="border p-2">
-            <button class="text-red-500 hover:text-red-700" onclick="removeFromCart('${
-              item.name
-            }')">Xóa</button>
-          </td>
-        </tr>
-      `;
-      cartTableBody.insertAdjacentHTML("beforeend", row);
-    });
-
-    const totalFormatted = formatPrice(totalAmount);
-    const totalRow = `
+// Get localStorage
+const getLocalStorage = () => {
+  const dataString = localStorage.getItem("CART_LIST");
+  if (!dataString) return;
+  // Convert dataString to Json
+  const dataJson = JSON.parse(dataString);
+  cartList = dataJson;
+};
+getLocalStorage();
+// Render cart list
+getEleId("gioHang").onclick = function () {
+  let content = "";
+  cartList.forEach((product, index) => {
+    content += `
       <tr>
-        <td colspan="5" class="text-right font-semibold">Tổng tiền:</td>
-        <td class="border p-2">${totalFormatted}</td> <!-- Hiển thị tổng tiền không dấu phẩy -->
-        <td class="border p-2"></td>
+        <td>${index + 1}</td>
+        <td>${product.name}</td>
+        <td class="flex items-center">
+          <button onclick="handleDecreace(${
+            product.id
+          })" class="text-red-600 bg-gray-100 h-8 w-8 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16"><path fill="currentColor" d="M2 7.75A.75.75 0 0 1 2.75 7h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 7.75"/></svg>
+          </button>
+          <img src="${product.img}" alt="" width="50"/>
+          <button onclick="handleIncreace(${
+            product.id
+          })" class="text-blue-600 bg-gray-100 h-8 w-8 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 1024 1024"><path fill="currentColor" d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8"/><path fill="currentColor" d="M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8Z"/></svg>
+          </button>
+        </td>
+        <td>${product.amount}</td>
+        <td>${product.price}</td>
+        <td>${product.price * product.amount}</td>
       </tr>
-    `;
-    cartTableBody.insertAdjacentHTML("beforeend", totalRow);
-  }
+  `;
+  });
+  getEleId("tbodyProduct").innerHTML = content;
+};
 
-  // Hàm định dạng giá tiền
-  function formatPrice(amount) {
-    return amount.toFixed(0);
-  }
+const checkExist = (id) => {
+  return cartList.some((item) => {
+    return Number(id) === Number(item.id);
+  });
+};
 
-  // Hàm giảm số lượng sản phẩm
-  window.decreaseQuantity = function (name) {
-    const product = cartItems.find((item) => item.name === name);
-    if (product && product.quantity > 1) {
-      product.quantity -= 1;
-    } else if (product && product.quantity === 1) {
-      cartItems = cartItems.filter((item) => item.name !== name);
-    }
-
-    // Lưu giỏ hàng vào localStorage sau khi thay đổi
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    renderCart();
-  };
-
-  // Hàm tăng số lượng sản phẩm
-  window.increaseQuantity = function (name) {
-    const product = cartItems.find((item) => item.name === name);
-    if (product) {
-      product.quantity += 1;
-    }
-
-    // Lưu giỏ hàng vào localStorage sau khi thay đổi
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    renderCart();
-  };
-
-  // Hàm xóa sản phẩm khỏi giỏ hàng
-  window.removeFromCart = function (name) {
-    cartItems = cartItems.filter((item) => item.name !== name);
-
-    // Lưu giỏ hàng vào localStorage sau khi thay đổi
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    renderCart();
-  };
-
-  // Thêm sự kiện cho nút "Thanh toán"
-  if (btnThanhToan) {
-    btnThanhToan.addEventListener("click", function () {
-      // Xóa sạch giỏ hàng và localStorage
-      cartItems = [];
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-      // Cập nhật giỏ hàng
-      renderCart();
-
-      // Thông báo thanh toán thành công
-      alert("Thanh toán thành công!");
-    });
-  }
-
-  // Render giỏ hàng khi trang tải lại
-  renderCart();
-});
-
-// Thêm sản phẩm và đếm số lượng sản phẩm
-let count = 0;
-const handleAdd = (id) => {
-  count++;
+const renderNumberCart = () => {
+  let sum = 0;
+  cartList.forEach((item) => {
+    sum += item.amount;
+  });
   getEleId("gioHang").innerHTML = `
-          Xem giỏ hàng (${count})
+          Xem giỏ hàng (${sum})
         `;
-  const promise = api.fetchData();
-  promise
-    .then((result) => {})
-    .catch((error) => {
-      console.log(error);
+};
+renderNumberCart();
+// Thêm sản phẩm và đếm số lượng sản phẩm
+const handleAdd = (id) => {
+  const isValid = checkExist(id);
+
+  if (isValid) {
+    const resultIndex = cartList.findIndex((item) => {
+      return Number(id) === Number(item.id);
     });
+    cartList[resultIndex] = {
+      ...cartList[resultIndex],
+      amount: cartList[resultIndex].amount + 1,
+    };
+  } else {
+    for (let i = 0; i < productList.arr.length; i++) {
+      if (Number(id) === Number(productList.arr[i].id)) {
+        cartList.push({
+          ...productList.arr[i],
+          amount: 1,
+        });
+        break;
+      }
+    }
+  }
+  renderNumberCart();
+  setLocalStorage();
 };
 window.handleAdd = handleAdd;
+
+getEleId("btnThanhToan").onclick = function () {
+  cartList = [];
+  getEleId("btn_close").click();
+  localStorage.removeItem("CART_LIST");
+  renderNumberCart();
+};
+
+// const rederAmount = () => {};
+
+// Giảm số lượng sản phẩm
+const handleDecreace = (id) => {
+  const isValid = checkExist(id);
+  if (isValid) {
+    const resultIndex = cartList.findIndex((item) => {
+      return Number(id) === Number(item.id);
+    });
+    cartList[resultIndex] = {
+      ...cartList[resultIndex],
+      amount: cartList[resultIndex].amount - 1,
+    };
+    console.log(cartList[resultIndex].amount);
+
+    if (cartList[resultIndex].amount === 0) {
+      cartList.pop(cartList[resultIndex]);
+    }
+  }
+  renderNumberCart();
+};
+window.handleDecreace = handleDecreace;
+
+const handleIncreace = (id) => {};
+window.handleIncreace = handleIncreace;

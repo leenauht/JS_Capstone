@@ -144,33 +144,39 @@ window.handleAdd = handleAdd;
 
 getEleId("btnThanhToan").onclick = function () {
   cartList = [];
+  alert("Bạn đã mua thành công");
   getEleId("btn_close").click();
   localStorage.removeItem("CART_LIST");
   renderNumberCart();
 };
 
-// const rederAmount = () => {};
-
-// Giảm số lượng sản phẩm
-const handleDecreace = (id) => {
-  const isValid = checkExist(id);
-  if (isValid) {
-    const resultIndex = cartList.findIndex((item) => {
-      return Number(id) === Number(item.id);
+getEleId("fillter").addEventListener("change", () => {
+  const promise = api.fetchData();
+  let listFillter = [];
+  promise
+    .then((result) => {
+      const { data } = result;
+      console.log(data);
+      const value = getEleId("fillter").value;
+      if (value === "Tất cả") {
+        renderList(data);
+      } else if (value === "Iphone") {
+        data.forEach((item) => {
+          if (item.type === "Iphone") {
+            listFillter.push(item);
+          }
+          renderList(listFillter);
+        });
+      } else {
+        data.forEach((item) => {
+          if (item.type === "Samsung") {
+            listFillter.push(item);
+          }
+          renderList(listFillter);
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
-    cartList[resultIndex] = {
-      ...cartList[resultIndex],
-      amount: cartList[resultIndex].amount - 1,
-    };
-    console.log(cartList[resultIndex].amount);
-
-    if (cartList[resultIndex].amount === 0) {
-      cartList.pop(cartList[resultIndex]);
-    }
-  }
-  renderNumberCart();
-};
-window.handleDecreace = handleDecreace;
-
-const handleIncreace = (id) => {};
-window.handleIncreace = handleIncreace;
+});

@@ -2,6 +2,11 @@ class ProductList {
   constructor() {
     this.arr = [];
   }
+
+  addProduct(data) {
+    this.arr = data;
+  }
+
   filterProducts(type) {
     if (type === "all") {
       return this.arr;
